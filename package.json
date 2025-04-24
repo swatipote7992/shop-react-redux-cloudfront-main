@@ -15,6 +15,8 @@
     "client:deploy:nc": "npm run client:deploy -- --no-confirm",
     "client:build:deploy": "npm run build && npm run client:deploy",
     "client:build:deploy:nc": "npm run build && npm run client:deploy:nc",
+    "azure:upload": "az storage blob upload-batch -s dist -d $web --account-name stgswatfrontendne001 --overwrite",
+    "azure:build:deploy": "npm run build && npm run azure:upload",
     "cloudfront:setup": "sls deploy",
     "cloudfront:domainInfo": "sls domainInfo",
     "cloudfront:invalidateCache": "sls invalidateCloudFrontCache",

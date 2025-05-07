@@ -34,11 +34,11 @@ resource "azurerm_storage_account" "front_end_storage_account" {
 
 resource "azurerm_resource_group" "product_service_rg" {
   location = "northeurope"
-  name     = "rg-product-service-sand-ne-001"
+  name     = "rg-product-service-sand-ne-002"
 }
 
 resource "azurerm_storage_account" "products_service_fa" {
-  name     = "stgswatproductsfane002"
+  name     = "stgsandproductsfane002"
   location = "northeurope"
 
   account_replication_type = "LRS"
@@ -56,7 +56,7 @@ resource "azurerm_storage_share" "products_service_fa" {
 }
 
 resource "azurerm_service_plan" "product_service_plan" {
-  name     = "asp-product-service-sand-ne-001"
+  name     = "asp-product-service-sand-ne-002"
   location = "northeurope"
 
   os_type  = "Windows"
@@ -66,17 +66,18 @@ resource "azurerm_service_plan" "product_service_plan" {
 }
 
 resource "azurerm_application_insights" "products_service_fa" {
-  name             = "appins-fa-product-service-swat-ne-002"
+  name             = "appins-fa-products-service-sand-ne-007"
   application_type = "web"
   location         = "northeurope"
 
+  # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/application_insights#workspace_id-1
+  workspace_id     = "/subscriptions/8d1bfa8a-66b7-4367-8cac-5b5c866dec04/resourceGroups/ai_appins-fa-products-service-sand-ne-002_41f8342b-7f51-4913-9c2f-6f99b241099d_managed/providers/Microsoft.OperationalInsights/workspaces/managed-appins-fa-products-service-sand-ne-002-ws"
 
   resource_group_name = azurerm_resource_group.product_service_rg.name
 }
 
-
 resource "azurerm_windows_function_app" "products_service" {
-  name     = "fa-azureproducts-service-ne-002"
+  name     = "fa-products-service-ne-007"
   location = "northeurope"
 
   service_plan_id     = azurerm_service_plan.product_service_plan.id
@@ -123,4 +124,12 @@ resource "azurerm_windows_function_app" "products_service" {
       tags["hidden-link: /app-insights-conn-string"]
     ]
   }
+}
+
+resource "azurerm_app_configuration" "products_config" {
+  location            = "northeurope"
+  name                = "appconfig-products-service-sand-ne-002"
+  resource_group_name = azurerm_resource_group.product_service_rg.name
+
+  sku = "free"
 }

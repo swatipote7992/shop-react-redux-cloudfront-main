@@ -4,12 +4,18 @@ import { AvailableProduct } from "~/models/Product";
 import { useQuery, useQueryClient, useMutation } from "react-query";
 import React from "react";
 
+const headers = {
+  "Ocp-Apim-Subscription-Key": "5865a8603fea47a9be7f8224e0753a5f",
+  "Access-Control-Allow-Origin": "true"
+};
+
 export function useAvailableProducts() {
   return useQuery<AvailableProduct[], AxiosError>(
     "available-products",
     async () => {
       const res = await axios.get<AvailableProduct[]>(
-        `${API_PATHS.bff}/product/available`
+        `${API_PATHS.bff}/products`,
+        { headers: headers }
       );
       return res.data;
     }
@@ -29,7 +35,7 @@ export function useAvailableProduct(id?: string) {
     ["product", { id }],
     async () => {
       const res = await axios.get<AvailableProduct>(
-        `${API_PATHS.bff}/product/${id}`
+        `${API_PATHS.bff}/products/${id}`
       );
       return res.data;
     },

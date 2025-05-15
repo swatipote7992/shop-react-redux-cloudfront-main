@@ -1,8 +1,10 @@
 import { CosmosClient } from "@azure/cosmos";
 import { faker } from "@faker-js/faker";
+import { config } from "dotenv";
 
-const key = '';
-const endpoint = '';
+config();
+const key = process.env.COSMOS_KEY!;
+const endpoint = process.env.COSMOS_ENDPOINT!;
 
 const cosmosClient = new CosmosClient({ endpoint, key });
 

@@ -1,5 +1,6 @@
 import { CosmosClient } from "@azure/cosmos";
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
+import { randomUUID } from "node:crypto";
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
@@ -15,22 +16,26 @@ const httpTrigger: AzureFunction = async function (
   const productsContainer = database.container("products");
   const stocksContainer = database.container("stocks");
 
-  const { resources: products } = await productsContainer.items
-    .readAll()
-    .fetchAll();
-  const { resources: stocks } = await stocksContainer.items
-    .readAll()
-    .fetchAll();
+  const id = randomUUID();
 
-  const body = products.map(({ id, price, title, description }) => ({
+  const newProduct = {
     id,
-    count: stocks.find((stock) => stock.product_id === id)?.count || 0,
-    price,
-    title,
-    description,
-  }));
+    title: req.body.title,
+    description: req.body.description,
+    price: req.body.price,
+  };
 
-  context.res = { body };
+  const newStock = {
+    product_id: id,
+    count: req.body.count,
+  };
+
+  await productsContainer.items.upsert(newProduct);
+  await stocksContainer.items.upsert(newStock);
+
+  context.res = {
+    body: req.body,
+  };
 };
 
 export default httpTrigger;

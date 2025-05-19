@@ -12,14 +12,10 @@
   "devDependencies": {
     "@azure/cosmos": "^4.4.0",
     "@azure/functions": "^3.5.1",
-    "@faker-js/faker": "^9.8.0",
+    "@faker-js/faker": "^9.7.0",
     "@types/node": "^18.19.100",
     "@types/uuid": "^10.0.0",
     "azure-functions-core-tools": "^4.x",
     "typescript": "^4.9.5"
-  },
-  "dependencies": {
-    "faker": "^6.6.6",
-    "uuid": "^11.1.0"
   }
 }

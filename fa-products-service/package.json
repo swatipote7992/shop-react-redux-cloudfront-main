@@ -13,9 +13,12 @@
     "@azure/cosmos": "^4.4.0",
     "@azure/functions": "^3.5.1",
     "@faker-js/faker": "^9.7.0",
-    "@types/node": "^18.19.100",
+    "@types/node": "^22.15.23",
     "@types/uuid": "^10.0.0",
     "azure-functions-core-tools": "^4.x",
     "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "@azure/storage-blob": "^12.27.0"
   }
 }

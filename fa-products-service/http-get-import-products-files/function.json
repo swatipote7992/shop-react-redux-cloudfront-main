@@ -4,10 +4,10 @@
       "authLevel": "function",
       "type": "httpTrigger",
       "direction": "in",
+      "route": "import",
       "name": "req",
       "methods": [
-        "get",
-        "post"
+        "get"
       ]
     },
     {
